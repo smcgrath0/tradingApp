@@ -11,9 +11,9 @@ export default class InvestmentBoard extends React.Component {
     this.getStocks = this.getStocks.bind(this);
   }
 
-  componentDidMount() {
-    this.getStocks();
-  }
+  // componentDidMount() {
+  //   this.getStocks();
+  // }
 
   getStocks() {
     fetch('https://api.worldtradingdata.com/api/v1/stock?symbol=SNAP,TWTR,VOD.L&api_token=demo')
