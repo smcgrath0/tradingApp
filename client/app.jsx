@@ -1,13 +1,15 @@
 import React from 'react';
+import InvestmentBoard from './containers/investmentBoard';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     return (
       <Router>
+        <Route exact path='/' component={InvestmentBoard}></Route>
         {/* <NavBar />
           <Route exact path='/landing-page' component={LandingPage} />
           <Route path='/company-dashboard/:companyID' component={CompanyDashboard} />

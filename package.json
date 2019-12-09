@@ -2,7 +2,7 @@
   "name": "tradingapp",
   "version": "0.0.1",
   "description": "robinhood clone, with suggestions to invest",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "webpack-dev-server",
