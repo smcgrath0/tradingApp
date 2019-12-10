@@ -3,8 +3,25 @@
   position: fixed;
   top: 90%;
   height: 10%;  
-  font-size: 2rem;
+  font-size: 2.5rem;
   justify-content: space-around;
+  align-items: center;
   width: 100%;
   background-color: #ADD8E6;
+}
+
+.InvestmentBoardStockContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ADD8E6;
+}
+.InvestmentBoardStockSymbol{
+  font-size: 20px;
+}
+.InvestmentBoardStockPrice{
+  font-size: 18px;
+}
+.InvestmentBoardStockPct{
+  font-size: 12px;
 }

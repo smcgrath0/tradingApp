@@ -3,6 +3,7 @@ import InvestmentBoard from './containers/investmentBoard';
 import UserDashboard from './containers/userdashboard';
 import FindStocks from './containers/findstocks';
 import StockSuggestions from './containers/stocksuggestions';
+import StockDetails from './containers/stockdetails';
 import Footer from './components/footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ export default class App extends React.Component {
         <Route path='/investment-board/:userID' component={InvestmentBoard} />
         <Route path='/stock-suggestions/:userID' component={StockSuggestions} />
         <Route path='/find-stocks/:userID' component={FindStocks} />
+        <Route path='/stock-details/:stockID' component={StockDetails} />
         {/* <NavBar />
           <Route exact path='/landing-page' component={LandingPage} />
           <Route exact path='/create-campaign/:companyID' component={CreateCampaign} />
