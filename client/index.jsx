@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
-// import { createStore } from 'redux';
-// import { Provider, useDispatch } from 'react-redux';
-// import rootReducer from './rootReducer';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers/rootReducer';
 
 // const dispatch = useDispatch();
 
@@ -22,11 +22,11 @@ import App from './app';
 //   }
 // }
 
-// const store = createStore(rootReducer);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
-  // <Provider store={store}>
-  <App />,
-  // </Provider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.querySelector('#root')
 );
