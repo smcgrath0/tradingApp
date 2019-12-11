@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { removeStock } from '../actions/stockactions';
 
 class StockDetails extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     removeStock: id => {
-      dispatch({ type: 'REMOVE_STOCK', 'stockID': id });
+      dispatch(removeStock(id));
     }
   };
 };

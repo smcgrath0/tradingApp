@@ -25,3 +25,50 @@
 .InvestmentBoardStockPct{
   font-size: 12px;
 }
+
+
+/*Find Stocks*/
+.findStocksContainer{
+  padding-left: 2%;
+  padding-top: 5%;
+}
+.topPicks{
+  display: flex;
+  overflow: auto;
+  padding-left: 5%;
+  margin-right: 5%;
+}
+.findStockStockContainer{
+  width: 40%;
+  border: 1px solid black;
+  margin-right: 5%;
+}
+
+.topPicks::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+.suggestedForYou{
+  display: flex;
+  overflow: auto;
+  padding-left: 5%;
+  margin-right: 5%;
+}
+
+.suggestedForYou::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+.releventSearches{
+  display: flex;
+  overflow: auto;
+  padding-left: 5%;
+  margin-right: 5%;
+}
+
+.releventSearches::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
