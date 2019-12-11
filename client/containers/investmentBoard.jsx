@@ -1,30 +1,43 @@
 import React from 'react';
-// import InvestmentBoardStock from '../components/investmentboardstock';
+import InvestmentBoardStock from '../components/investmentboardstock';
 import { connect } from 'react-redux';
+// import AppContext from '../context.js';
 // import { Link } from 'react-router-dom';
 
 class InvestmentBoard extends React.Component {
 
+  // getStocks() {
+  //   fetch('https://api.worldtradingdata.com/api/v1/stock?symbol=SNAP,TWTR,VOD.L&api_token=demo')
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       // console.log(res);
+  //       this.setState({
+  //         stocks: res
+  //       });
+  //     });
+  // }
+
   render() {
-    // if (this.state.stocks.data) {
-    //   let userStocks = this.props.userStocks.map((stock, index) => {
-    //     var dayChangeFactor = '';
-    //     if (stock.day_change < 0) {
-    //       dayChangeFactor = 'red';
-    //     } else if (stock.day_change > 0) {
-    //       dayChangeFactor = 'green';
-    //     }
-    //     return (
-    //       <InvestmentBoardStock key={index} stock={stock} dayChangeFactor={dayChangeFactor}/>
-    //     );
-    //   });
-    //   return (
-    //     <>
-    //       <h1>Your Investment Board</h1>
-    //       {userStocks}
-    //     </>
-    //   );
-    // }
+
+    if (this.props.userStocks) {
+      let userStocks = this.props.userStocks.map((stock, index) => {
+        var dayChangeFactor = '';
+        if (stock.day_change < 0) {
+          dayChangeFactor = 'red';
+        } else if (stock.day_change > 0) {
+          dayChangeFactor = 'green';
+        }
+        return (
+          <InvestmentBoardStock key={index} stock={stock} dayChangeFactor={dayChangeFactor}/>
+        );
+      });
+      return (
+        <>
+          <h1>Your Investment Board</h1>
+          {userStocks}
+        </>
+      );
+    }
 
     return (
       <div className="container" style={{ overflow: 'hidden' }} >
@@ -32,7 +45,7 @@ class InvestmentBoard extends React.Component {
           Current Campaigns
         </div>
         <div className="d-flex flex-wrap justify-content-center p-0">
-
+          {/* {campaigns} */}
         </div>
       </div>
     );
@@ -40,11 +53,15 @@ class InvestmentBoard extends React.Component {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  // console.log()
+  // let id = ownProps.match.props.params.symbol
   return {
     userInfo: state.userInfo,
     userStocks: state.userStocks
   };
 };
 
+// store.dispatch({type: })
 export default connect(mapStateToProps)(InvestmentBoard);
+// AllCampaigns.contextType = AppContext;
