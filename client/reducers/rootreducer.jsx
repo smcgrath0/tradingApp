@@ -1,9 +1,11 @@
+// import { FETCH_STOCKS_PENDING, FETCH_STOCKS_SUCCESS, FETCH_STOCKS_ERROR } from '../actions/action';
+
 const initState = {
-  userInfo: { userName: 'sammy27', firstName: 'Sam', lastName: 'White' },
-  userStocks: [{ symbol: 'SNAP', price: '14.14', stockID: 1, change_pct: 1.52 }, { symbol: 'APLE', price: '257.74', stockID: 2, change_pct: -2.52 }, { symbol: 'FB', price: '200.17', stockID: 3, change_pct: 5.52 }]
+  // userInfo: {},
+  // userStocks: []
 };
 
-const rootReducer = (state = initState, action) => {
+export const rootReducer = (state = initState, action) => {
   if (action.type === 'REMOVE_STOCK') {
     let newUserStocks = state.userStocks.filter(stock => {
       return action.stockID !== stock.stockID;
@@ -16,4 +18,36 @@ const rootReducer = (state = initState, action) => {
   return state;
 };
 
-export default rootReducer;
+const initialState = {
+  pending: undefined,
+  stocks: [],
+  error: null
+};
+
+export function stocksReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'FETCH_STOCKS_PENDING':
+      return {
+        ...state,
+        pending: true
+      };
+    case 'FETCH_STOCKS_SUCCESS':
+      return {
+        ...state,
+        pending: false,
+        stocks: action.stocks
+      };
+    case 'FETCH_STOCKS_ERROR':
+      return {
+        ...state,
+        pending: false,
+        error: action.error
+      };
+    default:
+      return state;
+  }
+}
+
+export const getStocks = state => state.stocks.stocks;
+export const getStocksPending = state => state.stocks.pending;
+export const getStocksError = state => state.stocks.error;
