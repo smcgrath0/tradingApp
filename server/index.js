@@ -1,5 +1,5 @@
 require('dotenv/config');
-const connection = require('./connection');
+// const connection = require('./connection');
 
 const path = require('path');
 const express = require('express');
@@ -16,7 +16,7 @@ const { buildSchema } = require('graphql');
 const server = express();
 let PORT = process.env.PORT;
 
-connection.connect();
+// connection.connect();
 
 server.use(bodyParser.json());
 

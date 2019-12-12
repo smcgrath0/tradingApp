@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 export default class InvestmentBoardStock extends React.Component {
   render() {
-    // console.log(this.props.stock);
     return (
       <Link to='/stock-details/1'>
         <div className="InvestmentBoardStockContainer" style={{ color: this.props.dayChangeFactor }}>
@@ -12,10 +11,10 @@ export default class InvestmentBoardStock extends React.Component {
             {this.props.stock.symbol}
           </div>
           <div className="InvestmentBoardStockPriceContainer">
-            <div className="InvestmentBoardStockPrice">
+            <div className="InvestmentBoardStockPrice" style={{ color: this.props.dayChangeFactor }}>
               ${this.props.stock.price}
             </div>
-            <div className="InvestmentBoardStockPct">
+            <div className="InvestmentBoardStockPct" style={{ color: this.props.dayChangeFactor }}>
               {this.props.stock.change_pct}%
             </div>
           </div>

@@ -22,9 +22,9 @@ class InvestmentBoard extends React.Component {
     if (this.props.userStocks) {
       let userStocks = this.props.userStocks.map((stock, index) => {
         var dayChangeFactor = '';
-        if (stock.day_change < 0) {
+        if (stock.change_pct < 0) {
           dayChangeFactor = 'red';
-        } else if (stock.day_change > 0) {
+        } else if (stock.change_pct > 0) {
           dayChangeFactor = 'green';
         }
         return (
@@ -33,7 +33,7 @@ class InvestmentBoard extends React.Component {
       });
       return (
         <>
-          <h1>Your Investment Board</h1>
+          <h1 className="InvestmentBoardHeader">Portfolio</h1>
           {userStocks}
         </>
       );

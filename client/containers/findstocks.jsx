@@ -11,7 +11,10 @@ export default class FindStocks extends React.Component {
 
         <h2>Search</h2>
         <div className="searchbar">
-          <p><i className="fas fa-search"></i>Search...</p>
+          <form className="findStocksSearchContainer">
+            <input className="searchInput" type="text" placeholder="Search..." name="search"></input>
+            <button type="submit"><i className="fa fa-search"></i></button>
+          </form>
         </div>
         <h2>Top Today</h2>
         <div className="topPicks">
