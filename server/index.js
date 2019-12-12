@@ -1,7 +1,11 @@
 require('dotenv/config');
-const path = require('path');
 const connection = require('./connection');
+
+const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+const graphqlHttp = require('express-graphql');
+const { buildSchema } = require('graphql');
 // const companies = require('./companies');
 // const creators = require('./creators');
 // const campaigns = require('./campaigns');
@@ -14,6 +18,34 @@ let PORT = process.env.PORT;
 
 connection.connect();
 
+server.use(bodyParser.json());
+
+server.use('/graphql', graphqlHttp({
+  schema: buildSchema(`
+      type RootQuery {
+        events: [String!]!
+      }
+
+      type RootMutation {
+        createEvent(name: String): String
+      }
+
+      schema {
+          query: RootQuery
+          mutation: RootMutation
+      }
+  `),
+  rootValue: {
+    events: () => {
+      return ['SNAP', 'APLE', 'FB'];
+    },
+    createEvent: args => {
+      const eventName = args.name;
+      return eventName;
+    }
+  },
+  graphiql: true
+}));
 // server.use('/api/companies', companies);
 // server.use('/api/creators', creators);
 // server.use('/api/campaigns', campaigns);
@@ -30,7 +62,6 @@ server.use((err, req, res, next) => {
     error: 'Internal Server Error',
     message: 'An unexpected error has occurred'
   });
-
 });
 
 server.listen(PORT, () => {
