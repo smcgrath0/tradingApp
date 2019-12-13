@@ -2,7 +2,7 @@
   display: flex;
   position: fixed;
   top: 90%;
-  height: 10%;  
+  height: 10%;
   font-size: 2.5rem;
   justify-content: space-around;
   align-items: center;
@@ -49,7 +49,7 @@
   margin-right: 5%;
 }
 .findStockStockContainer{
-  width: 40%;
+  width: 200px;
   background-color: lightgray;
   border-radius: 2%;
   margin-right: 5%;
@@ -96,4 +96,24 @@
   width: 90%;
   border: 0;
   padding-left: 1%;
+}
+
+.green{
+ color: green
+}
+
+.red{
+  color: red
+}
+
+.findStocksStockName{
+  padding: 2%;
+  margin-left: 5%;
+  margin-top: 5px;
+  width: 95%;
+}
+
+.highlighted{
+  text-align: right;
+  margin-right: 5%;
 }

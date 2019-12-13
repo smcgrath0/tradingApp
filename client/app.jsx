@@ -20,7 +20,7 @@ export default class App extends React.Component {
         <Route path='/investment-board/:userID' component={InvestmentBoard} />
         <Route path='/stock-suggestions/:userID' component={StockSuggestions} />
         <Route path='/find-stocks/:userID' component={FindStocks} />
-        <Route path='/stock-details/:stockID' component={StockDetails} />
+        <Route path='/stock-details/:stockSymbol' component={StockDetails} />
         {/* <NavBar />
           <Route exact path='/landing-page' component={LandingPage} />
           <Route exact path='/create-campaign/:companyID' component={CreateCampaign} />

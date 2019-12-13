@@ -8,15 +8,15 @@ class StockDetails extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
-    this.props.removeStock(this.props.stock[0].stockID);
+    this.props.removeStock(this.props.stock[0].symbol);
     this.props.history.push('/');
   }
   render() {
     const stock = this.props.stock[0] ? (
       <div>
+        <p>{this.props.stock[0].name}</p>
         <p>{this.props.stock[0].symbol}</p>
         <p>{this.props.stock[0].price}</p>
-        <p>{this.props.stock[0].stockID}</p>
         <div>
           <button onClick={this.handleClick}>Remove Stock</button>
         </div>
@@ -35,19 +35,18 @@ class StockDetails extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-
-  let id = ownProps.match.params.stockID;
+  let id = ownProps.match.params.stockSymbol;
   return {
-    stock: state.userStocks.filter(stock => {
-      if (stock.stockID === parseInt(id)) return stock;
+    stock: state.stocks.stocks.filter(stock => {
+      if (stock.symbol === id) return stock;
     })
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeStock: id => {
-      dispatch(removeStock(id));
+    removeStock: symbol => {
+      dispatch(removeStock(symbol));
     }
   };
 };

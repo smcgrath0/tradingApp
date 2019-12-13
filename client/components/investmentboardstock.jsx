@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default class InvestmentBoardStock extends React.Component {
   render() {
     return (
-      <Link to='/stock-details/1'>
+      <Link to={'/stock-details/' + this.props.stock.symbol}>
         <div className="InvestmentBoardStockContainer" style={{ color: this.props.dayChangeFactor }}>
           <div className="InvestmentBoardStockSymbol">
             {this.props.stock.symbol}

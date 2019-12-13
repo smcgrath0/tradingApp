@@ -1,21 +1,8 @@
 import React from 'react';
 import InvestmentBoardStock from '../components/investmentboardstock';
 import { connect } from 'react-redux';
-// import AppContext from '../context.js';
-// import { Link } from 'react-router-dom';
 
 class InvestmentBoard extends React.Component {
-
-  // getStocks() {
-  //   fetch('https://api.worldtradingdata.com/api/v1/stock?symbol=SNAP,TWTR,VOD.L&api_token=demo')
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       // console.log(res);
-  //       this.setState({
-  //         stocks: res
-  //       });
-  //     });
-  // }
 
   render() {
 
@@ -42,10 +29,10 @@ class InvestmentBoard extends React.Component {
     return (
       <div className="container" style={{ overflow: 'hidden' }} >
         <div style={{ textAlign: 'center', lineHeight: '300%', fontSize: '2rem', fontFamily: 'Patua One, cursive' }}>
-          Current Campaigns
+          Portfolio
         </div>
         <div className="d-flex flex-wrap justify-content-center p-0">
-          {/* {campaigns} */}
+          Go Invest!
         </div>
       </div>
     );
@@ -54,7 +41,6 @@ class InvestmentBoard extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log()
   // let id = ownProps.match.props.params.symbol
   return {
     userInfo: state.userInfo,
@@ -62,6 +48,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-// store.dispatch({type: })
 export default connect(mapStateToProps)(InvestmentBoard);
-// AllCampaigns.contextType = AppContext;

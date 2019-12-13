@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -22,24 +23,22 @@ class FindStocks extends React.Component {
     // more tests
     return true;
   }
-
-  renderTopStocks(stock) {
-    return (
-      <div className="findStockStockContainer">
-        <p>{stock.name}</p>
-        <p className="highlighted red">{stock.symbol}</p>
-        <p className="highlighted red">{stock.day_percentage}</p>
-      </div>
-    );
-  }
   render() {
     var stocks = this.props.stocks.map((stock, index) => {
+      var color;
+      if (stock.day_change < 0) {
+        color = 'red';
+      } else if (stock.day_change > 0) {
+        color = 'green';
+      }
       return (
-        <div key={index} className="findStockStockContainer">
-          <p>{stock.name}</p>
-          <p className="highlighted red">{stock.symbol}</p>
-          <p className="highlighted red">{stock.day_percentage}</p>
-        </div>
+        <Link key={index} to={'/stock-details/' + stock.symbol} className="text-dark">
+          <div className="findStockStockContainer">
+            <p className="findStocksStockName">{stock.name}</p>
+            <p className={'highlighted ' + color}>{stock.symbol}</p>
+            <p className={'highlighted ' + color}>{stock.change_pct}%</p>
+          </div>
+        </Link >
       );
     });
     if (!this.shouldComponentRender()) return <div>true</div>;
@@ -64,21 +63,6 @@ class FindStocks extends React.Component {
         <h2>Most Searched</h2>
         <div className="releventSearches">
           {stocks}
-          <div className="findStockStockContainer">
-            <p>Stock Name</p>
-            <p className="highlighted red">Stock Symbol</p>
-            <p className="highlighted red">stock day_percentage</p>
-          </div>
-          <div className="findStockStockContainer">
-            <p>Stock Name</p>
-            <p className="highlighted red">Stock Symbol</p>
-            <p className="highlighted red">stock day_percentage</p>
-          </div>
-          <div className="findStockStockContainer">
-            <p>Stock Name</p>
-            <p className="highlighted red">Stock Symbol</p>
-            <p className="highlighted red">stock day_percentage</p>
-          </div>
         </div>
       </div>
     );

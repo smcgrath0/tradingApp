@@ -1,5 +1,4 @@
 require('dotenv/config');
-// const connection = require('./connection');
 
 const path = require('path');
 const express = require('express');
