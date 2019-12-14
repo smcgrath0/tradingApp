@@ -23,35 +23,35 @@ server.use(bodyParser.json());
 
 server.use('/graphql', graphqlHttp({
   schema: buildSchema(`
-    type Event {
-      _id: ID!
-      title: String!
-      description: String!
-      price: Float!
-      date: String!
-    }
+      type Event {
+        _id: ID!
+        title: String!
+        description: String!
+        price: Float!
+        date: String!
+      }
 
-    input EventInput {
-      title: String!
-      description: String!
-      price: Float!
-      date: String!
-    }
+      input EventInput {
+        title: String!
+        description: String!
+        price: Float!
+        date: String!
+      }
 
-    type Stock {
-      _id: ID!
-      name: String!
-      description: String!
-      symbol: String!
-      price: Float!
-    }
+      type Stock {
+        _id: ID!
+        name: String!
+        description: String!
+        symbol: String!
+        price: Float!
+      }
 
-    input StockInput {
-      name: String!
-      description: String!
-      symbol: String!
-      price: Float!
-    }
+      input StockInput {
+        name: String!
+        description: String!
+        symbol: String!
+        price: Float!
+      }
 
       type RootQuery {
         events: [Event!]!

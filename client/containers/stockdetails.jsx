@@ -1,24 +1,79 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeStock } from '../actions/stockactions';
+// import { bindActionCreators } from 'redux';
+import { removeStock, addStock, addModal, removeModal } from '../actions/stockactions';
 
 class StockDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleAddStock = this.handleAddStock.bind(this);
+    this.handleRemoveStock = this.handleRemoveStock.bind(this);
+    this.addModal = this.addModal.bind(this);
   }
-  handleClick() {
+  handleAddStock() {
+    this.props.addModal();
+    // this.props.addStock(this.props.stock[0].symbol);
+    // this.props.history.push('/');
+  }
+  handleRemoveStock() {
     this.props.removeStock(this.props.stock[0].symbol);
     this.props.history.push('/');
   }
+  addModal() {
+    var modalStatus = 'none';
+    if (this.props.modalStatus) {
+      modalStatus = this.props.modalStatus;
+    }
+    return (
+      <div className='addModalContainer' style={{ display: modalStatus }}>
+        <div className="addModal">
+          <div className="modalCloseContainer">
+            <i className="fas fa-times" onClick={this.handleAddStock}></i>
+          </div>
+          <div>${this.props.stock[0].price} x <input className="quantityOfStocks" type="number" min="1"/></div>
+          <div>
+            Total: {this.props.stock[0].price}
+          </div>
+        </div>
+      </div>
+    );
+  }
   render() {
+    // stock layout
+    // 52_week_high: "2035.80"
+    // 52_week_low: "1307.00"
+    // change_pct: "0.03"
+    // close_yesterday: "1760.33"
+    // currency: "USD"
+    // day_change: "0.61"
+    // day_high: "1768.88"
+    // day_low: "1755.00"
+    // eps: "22.57"
+    // gmt_offset: "-18000"
+    // last_trade_time: "2019-12-13 16:00:01"
+    // market_cap: "873068756992"
+    // name: "Amazon.com, Inc."
+    // pe: "78.03"
+    // price: "1760.94"
+    // price_open: "1765.00"
+    // shares: "495796992"
+    // stock_exchange_long: "NASDAQ Stock Exchange"
+    // stock_exchange_short: "NASDAQ"
+    // symbol: "AMZN"
+    // timezone: "EST"
+    // timezone_name: "America/New_York"
+    // volume: "2426806"
+    // volume_avg: "2767850"
     const stock = this.props.stock[0] ? (
       <div>
         <p>{this.props.stock[0].name}</p>
         <p>{this.props.stock[0].symbol}</p>
         <p>{this.props.stock[0].price}</p>
         <div>
-          <button onClick={this.handleClick}>Remove Stock</button>
+          <button onClick={this.handleAddStock}>Add Stock</button>
+        </div>
+        <div>
+          <button onClick={this.handleRemoveStock}>Remove Stock</button>
         </div>
       </div>
     ) : (
@@ -27,9 +82,12 @@ class StockDetails extends React.Component {
       </div>
     );
     return (
-      <div>
-        { stock }
-      </div>
+      <>
+        <div>
+          { stock }
+        </div>
+        {this.addModal()}
+      </>
     );
   }
 }
@@ -39,7 +97,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     stock: state.stocks.stocks.filter(stock => {
       if (stock.symbol === id) return stock;
-    })
+    }),
+    modalStatus: state.root.modalStatus
   };
 };
 
@@ -47,6 +106,15 @@ const mapDispatchToProps = dispatch => {
   return {
     removeStock: symbol => {
       dispatch(removeStock(symbol));
+    },
+    addStock: symbol => {
+      dispatch(addStock(symbol));
+    },
+    addModal: () => {
+      dispatch(addModal());
+    },
+    removeModal: () => {
+      dispatch(removeModal());
     }
   };
 };

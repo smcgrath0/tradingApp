@@ -117,3 +117,44 @@
   text-align: right;
   margin-right: 5%;
 }
+
+
+.addModalContainer{
+  position: absolute;
+  background-color: rgba(150,150,150,0.3);
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.addModal {
+  background-color: black;
+  color: white;
+  width: 80%;
+}
+.modalCloseContainer {
+  text-align: right;
+  padding-right: 5%;
+  font-size: 2rem;
+}
+
+.quantityOfStocks{
+  width: 15%;
+
+}
+
+.removeModalContainer{
+  position: absolute;
+  background-color: rgba(150,150,150,0.3);
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.hidden{
+  display: none;
+}

@@ -1,18 +1,46 @@
 // import { FETCH_STOCKS_PENDING, FETCH_STOCKS_SUCCESS, FETCH_STOCKS_ERROR } from '../actions/action';
 
 const initState = {
-  // userInfo: {},
-  // userStocks: []
+  userInfo: {},
+  userStocks: [],
+  modalStatus: 'none'
 };
 
 export const rootReducer = (state = initState, action) => {
   if (action.type === 'REMOVE_STOCK') {
     let newUserStocks = state.userStocks.filter(stock => {
-      return action.stockID !== stock.stockID;
+      return action.stock.symbol !== stock.symbol;
     });
     return {
       ...state,
       userStocks: newUserStocks
+    };
+  }
+  if (action.type === 'ADD_STOCK') {
+
+    let newUserStocks = state.userStocks.push(action);
+    return {
+      ...state,
+      userStocks: newUserStocks
+    };
+  }
+  if (action.type === 'ADD_MODAL') {
+    let newmodalStatus = 'flex';
+    if (state.modalStatus === 'flex') {
+      newmodalStatus = 'none';
+    }
+    return {
+      ...state,
+      modalStatus: newmodalStatus
+    };
+  }
+  if (action.type === 'REMOVE_MODAL') {
+
+    let { modalStatus } = state;
+    modalStatus = 'remove';
+    return {
+      ...state,
+      modalStatus: modalStatus
     };
   }
   return state;
