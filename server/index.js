@@ -12,6 +12,8 @@ const { buildSchema } = require('graphql');
 // const winningAds = require('./winningAds');
 // const user = require('./user');
 
+const events = [];
+const stocks = [];
 const server = express();
 let PORT = process.env.PORT;
 
@@ -21,12 +23,44 @@ server.use(bodyParser.json());
 
 server.use('/graphql', graphqlHttp({
   schema: buildSchema(`
+    type Event {
+      _id: ID!
+      title: String!
+      description: String!
+      price: Float!
+      date: String!
+    }
+
+    input EventInput {
+      title: String!
+      description: String!
+      price: Float!
+      date: String!
+    }
+
+    type Stock {
+      _id: ID!
+      name: String!
+      description: String!
+      symbol: String!
+      price: Float!
+    }
+
+    input StockInput {
+      name: String!
+      description: String!
+      symbol: String!
+      price: Float!
+    }
+
       type RootQuery {
-        events: [String!]!
+        events: [Event!]!
+        stocks: [Stock!]!
       }
 
       type RootMutation {
-        createEvent(name: String): String
+        createEvent(eventInput: EventInput): Event
+        createStock(stockInput: StockInput): Stock
       }
 
       schema {
@@ -36,11 +70,32 @@ server.use('/graphql', graphqlHttp({
   `),
   rootValue: {
     events: () => {
-      return ['SNAP', 'APLE', 'FB'];
+      return events;
     },
     createEvent: args => {
-      const eventName = args.name;
-      return eventName;
+      const event = {
+        _id: Math.random().toString(),
+        title: args.eventInput.title,
+        description: args.eventInput.description,
+        price: +args.eventInput.price,
+        date: args.eventInput.date
+      };
+      events.push(event);
+      return event;
+    },
+    stocks: () => {
+      return stocks;
+    },
+    createStock: args => {
+      const stock = {
+        _id: Math.random().toString(),
+        name: args.stockInput.name,
+        description: args.stockInput.description,
+        price: +args.stockInput.price,
+        symbol: args.stockInput.symbol
+      };
+      stocks.push(stock);
+      return stock;
     }
   },
   graphiql: true
