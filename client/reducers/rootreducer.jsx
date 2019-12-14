@@ -3,10 +3,17 @@
 const initState = {
   userInfo: {},
   userStocks: [],
-  modalStatus: 'none'
+  modalStatus: 'none',
+  stockQuantity: 1
 };
 
 export const rootReducer = (state = initState, action) => {
+  if (action.type === 'STOCK_QUANTITY') {
+    return {
+      ...state,
+      stockQuantity: action.quantity
+    };
+  }
   if (action.type === 'REMOVE_STOCK') {
     let newUserStocks = state.userStocks.filter(stock => {
       return action.stock.symbol !== stock.symbol;
@@ -17,8 +24,17 @@ export const rootReducer = (state = initState, action) => {
     };
   }
   if (action.type === 'ADD_STOCK') {
-
-    let newUserStocks = state.userStocks.push(action);
+    var counter = 0;
+    let newUserStocks = state.userStocks.map(stock => {
+      if (stock.symbol === action.symbol) {
+        counter = 1;
+        stock.quantity += state.stockQuantity;
+      }
+    });
+    if (!counter) {
+      newUserStocks = state.userStocks;
+      newUserStocks.push({ symbol: action.symbol, quantity: action.quantity });
+    }
     return {
       ...state,
       userStocks: newUserStocks

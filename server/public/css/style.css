@@ -133,6 +133,7 @@
   background-color: black;
   color: white;
   width: 80%;
+  border-radius: 5px;
 }
 .modalCloseContainer {
   text-align: right;

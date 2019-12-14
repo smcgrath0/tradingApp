@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import { removeStock, addStock, addModal, removeModal } from '../actions/stockactions';
+import { removeStock, addStock, addModal, removeModal, changeStockQuantity } from '../actions/stockactions';
 
 class StockDetails extends React.Component {
   constructor(props) {
@@ -9,11 +9,13 @@ class StockDetails extends React.Component {
     this.handleAddStock = this.handleAddStock.bind(this);
     this.handleRemoveStock = this.handleRemoveStock.bind(this);
     this.addModal = this.addModal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange() {
+    this.props.changeStockQuantity(event.target.value);
   }
   handleAddStock() {
     this.props.addModal();
-    // this.props.addStock(this.props.stock[0].symbol);
-    // this.props.history.push('/');
   }
   handleRemoveStock() {
     this.props.removeStock(this.props.stock[0].symbol);
@@ -30,9 +32,20 @@ class StockDetails extends React.Component {
           <div className="modalCloseContainer">
             <i className="fas fa-times" onClick={this.handleAddStock}></i>
           </div>
-          <div>${this.props.stock[0].price} x <input className="quantityOfStocks" type="number" min="1"/></div>
+          <div>${this.props.stock[0].price} x <input id="quantityOfStocks" type="number" min="1" value={this.props.stockQuantity} onChange={this.handleChange}/></div>
           <div>
-            Total: {this.props.stock[0].price}
+            Total: {document.querySelector('#quantityOfStocks')
+              ? this.props.stock[0].price * document.querySelector('#quantityOfStocks').value
+              : this.props.stock[0].price
+            }
+          </div>
+          <div>
+            <button onClick={ () => {
+              if (document.querySelector('#quantityOfStocks').value) {
+                this.props.addStock(this.props.stock[0].symbol, this.props.stockQuantity);
+                this.props.history.push('/');
+              }
+            }}>Buy Shares</button>
           </div>
         </div>
       </div>
@@ -98,7 +111,8 @@ const mapStateToProps = (state, ownProps) => {
     stock: state.stocks.stocks.filter(stock => {
       if (stock.symbol === id) return stock;
     }),
-    modalStatus: state.root.modalStatus
+    modalStatus: state.root.modalStatus,
+    stockQuantity: state.root.stockQuantity
   };
 };
 
@@ -115,6 +129,9 @@ const mapDispatchToProps = dispatch => {
     },
     removeModal: () => {
       dispatch(removeModal());
+    },
+    changeStockQuantity: quantity => {
+      dispatch(changeStockQuantity(quantity));
     }
   };
 };

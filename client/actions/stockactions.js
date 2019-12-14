@@ -5,10 +5,11 @@ export const removeStock = symbol => {
   };
 };
 
-export const addStock = symbol => {
+export const addStock = (symbol, quantity) => {
   return {
     type: 'ADD_STOCK',
-    symbol: symbol
+    symbol: symbol,
+    quantity: quantity
   };
 };
 
@@ -21,5 +22,12 @@ export const addModal = () => {
 export const removeModal = () => {
   return {
     type: 'REMOVE_MODAL'
+  };
+};
+
+export const changeStockQuantity = quantity => {
+  return {
+    type: 'STOCK_QUANTITY',
+    quantity: quantity
   };
 };

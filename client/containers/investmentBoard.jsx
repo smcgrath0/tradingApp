@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class InvestmentBoard extends React.Component {
 
   render() {
-
     if (this.props.userStocks) {
       let userStocks = this.props.userStocks.map((stock, index) => {
         var dayChangeFactor = '';
@@ -43,8 +42,8 @@ class InvestmentBoard extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   // let id = ownProps.match.props.params.symbol
   return {
-    userInfo: state.userInfo,
-    userStocks: state.userStocks
+    userInfo: state.root.userInfo,
+    userStocks: state.root.userStocks
   };
 };
 
