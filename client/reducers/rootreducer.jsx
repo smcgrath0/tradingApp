@@ -4,7 +4,8 @@ const initState = {
   userInfo: {},
   userStocks: [],
   modalStatus: 'none',
-  stockQuantity: 1
+  stockQuantity: 1,
+  pending: undefined
 };
 
 export const rootReducer = (state = initState, action) => {
@@ -27,17 +28,21 @@ export const rootReducer = (state = initState, action) => {
     var counter = 0;
     let newUserStocks = state.userStocks.map(stock => {
       if (stock.symbol === action.symbol) {
+        let quantity = parseInt(stock.quantity);
         counter = 1;
-        stock.quantity += state.stockQuantity;
+        quantity += parseInt(state.stockQuantity);
+        stock.quantity = quantity;
       }
+      return stock;
     });
     if (!counter) {
       newUserStocks = state.userStocks;
-      newUserStocks.push({ symbol: action.symbol, quantity: action.quantity });
+      newUserStocks.push({ symbol: action.symbol, quantity: state.stockQuantity });
     }
     return {
       ...state,
-      userStocks: newUserStocks
+      userStocks: newUserStocks,
+      pending: true
     };
   }
   if (action.type === 'ADD_MODAL') {
@@ -51,15 +56,36 @@ export const rootReducer = (state = initState, action) => {
     };
   }
   if (action.type === 'REMOVE_MODAL') {
-
-    let { modalStatus } = state;
-    modalStatus = 'remove';
+    let newmodalStatus = 'none';
+    if (state.modalStatus === 'none') {
+      newmodalStatus = 'flex';
+    }
     return {
       ...state,
-      modalStatus: modalStatus
+      modalStatus: newmodalStatus
     };
   }
-  return state;
+  switch (action.type) {
+    case 'FETCH_STOCKS_PENDING':
+      return {
+        ...state,
+        pending: true
+      };
+    case 'FETCH_STOCKS_SUCCESS':
+      return {
+        ...state,
+        pending: false,
+        stocks: action.stocks
+      };
+    case 'FETCH_STOCKS_ERROR':
+      return {
+        ...state,
+        pending: false,
+        error: action.error
+      };
+    default:
+      return state;
+  }
 };
 
 const initialState = {
@@ -92,6 +118,12 @@ export function stocksReducer(state = initialState, action) {
   }
 }
 
-export const getStocks = state => state.stocks.stocks;
+export const getStocks = state => {
+  if (state.stocks.stocks === undefined) return [];
+  return state.stocks.stocks;
+};
 export const getStocksPending = state => state.stocks.pending;
 export const getStocksError = state => state.stocks.error;
+
+export const getPortfolioStocksPending = state => state.root.pending;
+export const getPortfolioStocksError = state => state.root.error;

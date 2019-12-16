@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 // import { bindActionCreators } from 'redux';
 import { removeStock, addStock, addModal, removeModal, changeStockQuantity } from '../actions/stockactions';
 
@@ -43,6 +44,7 @@ class StockDetails extends React.Component {
             <button onClick={ () => {
               if (document.querySelector('#quantityOfStocks').value) {
                 this.props.addStock(this.props.stock[0].symbol, this.props.stockQuantity);
+                this.removeModal();
                 this.props.history.push('/');
               }
             }}>Buy Shares</button>
@@ -121,8 +123,8 @@ const mapDispatchToProps = dispatch => {
     removeStock: symbol => {
       dispatch(removeStock(symbol));
     },
-    addStock: symbol => {
-      dispatch(addStock(symbol));
+    addStock: (symbol, quantity) => {
+      dispatch(addStock(symbol, quantity));
     },
     addModal: () => {
       dispatch(addModal());
@@ -136,4 +138,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StockDetails);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StockDetails));

@@ -12,7 +12,7 @@ export default class InvestmentBoardStock extends React.Component {
           </div>
           <div className="InvestmentBoardStockPriceContainer">
             <div className="InvestmentBoardStockPrice" style={{ color: this.props.dayChangeFactor }}>
-              ${this.props.stock.price}
+              ${this.props.stock.price * parseInt(this.props.userQuantity)}
             </div>
             <div className="InvestmentBoardStockPct" style={{ color: this.props.dayChangeFactor }}>
               {this.props.stock.change_pct}%

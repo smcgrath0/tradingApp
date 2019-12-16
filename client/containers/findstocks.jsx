@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
 
 import fetchStocksA from '../fetchstocks';
 import { getStocksError, getStocks, getStocksPending } from '../reducers/rootReducer';
@@ -14,7 +15,8 @@ class FindStocks extends React.Component {
 
   componentDidMount() {
     const { fetchStocks } = this.props;
-    fetchStocks();
+    const stockSymbols = ['TSLA', 'AMZN', 'MU'];
+    fetchStocks(stockSymbols);
   }
 
   shouldComponentRender() {
@@ -79,7 +81,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchStocks: fetchStocksA
 }, dispatch);
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(FindStocks);
+)(FindStocks));
