@@ -44,7 +44,7 @@ class StockDetails extends React.Component {
             <button onClick={ () => {
               if (document.querySelector('#quantityOfStocks').value) {
                 this.props.addStock(this.props.stock[0].symbol, this.props.stockQuantity);
-                this.removeModal();
+                this.props.removeModal();
                 this.props.history.push('/');
               }
             }}>Buy Shares</button>
