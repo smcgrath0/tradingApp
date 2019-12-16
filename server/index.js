@@ -5,6 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
+const mongoose = require('mongoose');
+
+const Event = require('./models/event');
 // const companies = require('./companies');
 // const creators = require('./creators');
 // const campaigns = require('./campaigns');
@@ -12,7 +15,6 @@ const { buildSchema } = require('graphql');
 // const winningAds = require('./winningAds');
 // const user = require('./user');
 
-const events = [];
 const stocks = [];
 const server = express();
 let PORT = process.env.PORT;
@@ -70,18 +72,35 @@ server.use('/graphql', graphqlHttp({
   `),
   rootValue: {
     events: () => {
-      return events;
+      return Event
+        .find()
+        .then(res => {
+          return res.map(event => {
+            return { ...event._doc };
+          });
+        })
+        .catch(err => {
+          throw err;
+        });
     },
     createEvent: args => {
-      const event = {
-        _id: Math.random().toString(),
+      const event = new Event({
         title: args.eventInput.title,
         description: args.eventInput.description,
         price: +args.eventInput.price,
-        date: args.eventInput.date
-      };
-      events.push(event);
-      return event;
+        date: new Date(args.eventInput.date)
+      });
+      return event
+        .save()
+        .then(res => {
+          // eslint-disable-next-line no-console
+          console.log(res);
+          return { ...res._doc };
+        })
+        .catch(err => {
+          console.error(err);
+          throw err;
+        });
     },
     stocks: () => {
       return stocks;
@@ -118,7 +137,12 @@ server.use((err, req, res, next) => {
   });
 });
 
-server.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log('its listening closely on port: ' + PORT);
-});
+mongoose.connect(`mongodb+srv://shane:${process.env.MONGO_PASSWORD}@tradingapp-jyews.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`)
+  .then(
+    server.listen(PORT, () => {
+    // eslint-disable-next-line no-console
+      console.log('its listening closely on port: ' + PORT);
+    })
+  ).catch(err => {
+    console.error(err);
+  });
