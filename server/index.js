@@ -6,9 +6,11 @@ const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const Event = require('./models/event');
 const Stock = require('./models/stock');
+const User = require('./models/user');
 
 const server = express();
 let PORT = process.env.PORT;
@@ -49,6 +51,17 @@ server.use('/graphql', graphqlHttp({
         dateIPO: String!
       }
 
+      type User {
+        _id: ID!
+        email: String!
+        password: String
+      }
+
+      input UserInput {
+        email: String!
+        password: String
+      }
+
       type RootQuery {
         events: [Event!]!
         stocks: [Stock!]!
@@ -57,6 +70,7 @@ server.use('/graphql', graphqlHttp({
       type RootMutation {
         createEvent(eventInput: EventInput): Event
         createStock(stockInput: StockInput): Stock
+        createUser(userInput: UserInput): User
       }
 
       schema {
@@ -82,14 +96,27 @@ server.use('/graphql', graphqlHttp({
         title: args.eventInput.title,
         description: args.eventInput.description,
         price: +args.eventInput.price,
-        date: new Date(args.eventInput.date)
+        date: new Date(args.eventInput.date),
+        creator: '5df70bf202716f0eb76c6f30'
       });
+      let createEvent;
       return event
         .save()
         .then(res => {
           // eslint-disable-next-line no-console
           console.log(res);
-          return { ...res._doc };
+          createEvent = { ...res._doc };
+          return User.findById('5df70bf202716f0eb76c6f30');
+        })
+        .then(user => {
+          if (!user) {
+            throw new Error('User Not found');
+          }
+          user.createEvent.push(event);
+          return user.save();
+        })
+        .then(res => {
+          return createEvent;
         })
         .catch(err => {
           console.error(err);
@@ -114,20 +141,59 @@ server.use('/graphql', graphqlHttp({
         symbol: args.stockInput.symbol,
         description: args.stockInput.description,
         price: +args.stockInput.price,
-        dateIPO: args.stockInput.dateIPO
+        dateIPO: args.stockInput.dateIPO,
+        creator: '5df70bf202716f0eb76c6f30'
       });
+      let createStock;
       return stock
         .save()
         .then(res => {
           // eslint-disable-next-line no-console
           console.log(res);
-          return { ...res._doc };
+          createStock = { ...res._doc };
+          return User.findById('5df70bf202716f0eb76c6f30');
+        })
+        .then(user => {
+          if (!user) {
+            throw new Error('User Not found');
+          }
+          user.createStock.push(stock);
+          return user.save();
+        })
+        .then(res => {
+          return createStock;
         })
         .catch(err => {
           console.error(err);
           throw err;
         });
+    },
+    createUser: args => {
+      return User.findOne({ email: args.userInput.email })
+        .then(user => {
+          if (user) {
+            throw new Error('User Exists Already');
+          }
+          return bcrypt.hash(args.userInput.password, 12)
+            .then(hashedPassword => {
+              const user = new User({
+                email: args.userInput.email,
+                password: hashedPassword
+              });
+              user.save()
+                .then(res => {
+                  return { ...res._doc, password: null };
+                })
+                .catch(err => {
+                  throw err;
+                });
+            });
+        })
+        .catch(err => {
+          throw err;
+        });
     }
+
   },
   graphiql: true
 }));

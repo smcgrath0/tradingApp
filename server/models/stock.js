@@ -22,6 +22,10 @@ const stockSchema = new Schema({
   dateIPO: {
     type: Date,
     required: true
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
