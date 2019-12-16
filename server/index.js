@@ -8,6 +8,7 @@ const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 
 const Event = require('./models/event');
+const Stock = require('./models/stock');
 // const companies = require('./companies');
 // const creators = require('./creators');
 // const campaigns = require('./campaigns');
@@ -15,7 +16,6 @@ const Event = require('./models/event');
 // const winningAds = require('./winningAds');
 // const user = require('./user');
 
-const stocks = [];
 const server = express();
 let PORT = process.env.PORT;
 
@@ -46,6 +46,7 @@ server.use('/graphql', graphqlHttp({
         description: String!
         symbol: String!
         price: Float!
+        dateIPO: String!
       }
 
       input StockInput {
@@ -53,6 +54,7 @@ server.use('/graphql', graphqlHttp({
         description: String!
         symbol: String!
         price: Float!
+        dateIPO: String!
       }
 
       type RootQuery {
@@ -103,18 +105,36 @@ server.use('/graphql', graphqlHttp({
         });
     },
     stocks: () => {
-      return stocks;
+      return Stock
+        .find()
+        .then(res => {
+          return res.map(event => {
+            return { ...event._doc };
+          });
+        })
+        .catch(err => {
+          throw err;
+        });
     },
     createStock: args => {
-      const stock = {
-        _id: Math.random().toString(),
+      const stock = new Stock({
         name: args.stockInput.name,
+        symbol: args.stockInput.symbol,
         description: args.stockInput.description,
         price: +args.stockInput.price,
-        symbol: args.stockInput.symbol
-      };
-      stocks.push(stock);
-      return stock;
+        dateIPO: args.stockInput.dateIPO
+      });
+      return stock
+        .save()
+        .then(res => {
+          // eslint-disable-next-line no-console
+          console.log(res);
+          return { ...res._doc };
+        })
+        .catch(err => {
+          console.error(err);
+          throw err;
+        });
     }
   },
   graphiql: true
