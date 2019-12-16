@@ -30,3 +30,14 @@ export default class Footer extends React.Component {
     );
   }
 }
+
+// const mapStateToProps = (state, ownProps) => {
+//   let id = ownProps.match.params.stockSymbol;
+//   return {
+//     stock: state.stocks.stocks.filter(stock => {
+//       if (stock.symbol === id) return stock;
+//     }),
+//     modalStatus: state.root.modalStatus,
+//     stockQuantity: state.root.stockQuantity
+//   };
+// };

@@ -119,6 +119,35 @@
 }
 
 
+.detailsContainer {
+  width: 90%;
+  margin-left: 5%;
+}
+.detailsName{
+  font-size: 20px;
+  margin-bottom: 0%;
+}
+.detailsSymbol{
+  font-size: 20px;
+  margin-bottom: 0%;
+}
+.detailsPrice{
+  font-size: 18px;
+  margin-top: 10%;
+  text-align: right;
+}
+.detailsAddButton{
+  border:none;
+  cursor: pointer;
+  background-color: #ADD8E6;
+}
+.detailsAddButton:hover{
+  background-color: rgb(129, 179, 197);
+}
+.detailsRemoveButton{
+  border: none;
+  cursor: pointer;
+}
 .addModalContainer{
   position: absolute;
   background-color: rgba(150,150,150,0.3);
@@ -155,7 +184,36 @@
 
 .quantityOfStocks{
   width: 15%;
-
+}
+.addModalName{
+  font-size: 24px;
+  margin: 30px 0;
+  text-align: center;
+}
+.addModalPrice{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.addModalTotal{
+  text-align: center;
+  margin: 100px 0;
+  font-size: 32px;
+}
+.addModalButtonContainer{
+  text-align: center;
+  margin: 20px 0;
+}
+.addModalButton{
+  border: none;
+  cursor: pointer;
+  background-color: #ADD8E6;
+  text-align: center;
+  padding: 20px;
+}
+.addModalButton:hover{
+  background-color: rgb(129, 179, 197);
 }
 
 .removeModalContainer{

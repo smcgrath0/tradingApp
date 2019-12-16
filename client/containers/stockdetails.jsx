@@ -33,15 +33,16 @@ class StockDetails extends React.Component {
           <div className="modalCloseContainer">
             <i className="fas fa-times" onClick={this.handleAddStock}></i>
           </div>
-          <div>${this.props.stock[0].price} x <input id="quantityOfStocks" type="number" min="1" value={this.props.stockQuantity} onChange={this.handleChange}/></div>
-          <div>
+          <div className="addModalName">{this.props.stock[0].name}</div>
+          <div className="addModalPrice">${this.props.stock[0].price} x <input id="quantityOfStocks" type="number" min="1" value={this.props.stockQuantity} onChange={this.handleChange}/></div>
+          <div className="addModalTotal">
             Total: {document.querySelector('#quantityOfStocks')
               ? this.props.stock[0].price * document.querySelector('#quantityOfStocks').value
               : this.props.stock[0].price
             }
           </div>
-          <div>
-            <button onClick={ () => {
+          <div className="addModalButtonContainer">
+            <button className="addModalButton" onClick={ () => {
               if (document.querySelector('#quantityOfStocks').value) {
                 this.props.addStock(this.props.stock[0].symbol, this.props.stockQuantity);
                 this.props.removeModal();
@@ -80,15 +81,15 @@ class StockDetails extends React.Component {
     // volume: "2426806"
     // volume_avg: "2767850"
     const stock = this.props.stock[0] ? (
-      <div>
-        <p>{this.props.stock[0].name}</p>
-        <p>{this.props.stock[0].symbol}</p>
-        <p>{this.props.stock[0].price}</p>
+      <div className="detailsContainer">
+        <p className="detailsName">{this.props.stock[0].name}</p>
+        <p className="detailsSymbol">{this.props.stock[0].symbol}</p>
+        <p className="detailsPrice">{this.props.stock[0].price}</p>
         <div>
-          <button onClick={this.handleAddStock}>Add Stock</button>
+          <button className="detailsAddButton" onClick={this.handleAddStock}>Add Stock</button>
         </div>
         <div>
-          <button onClick={this.handleRemoveStock}>Remove Stock</button>
+          <button className="detailsRemoveButton" onClick={this.handleRemoveStock}>Remove Stock</button>
         </div>
       </div>
     ) : (
