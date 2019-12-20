@@ -1,0 +1,106 @@
+.detailsContainer {
+  width: 90%;
+  margin-left: 5%;
+}
+.detailsName{
+  font-size: 20px;
+  margin-bottom: 0%;
+}
+.detailsSymbol{
+  font-size: 20px;
+  margin-bottom: 0%;
+}
+.detailsPrice{
+  font-size: 18px;
+  margin-top: 10%;
+  text-align: right;
+}
+.detailsAddButton{
+  border:none;
+  cursor: pointer;
+  background-color: #ADD8E6;
+}
+.detailsAddButton:hover{
+  background-color: rgb(129, 179, 197);
+}
+.detailsRemoveButton{
+  border: none;
+  cursor: pointer;
+}
+.addModalContainer{
+  position: absolute;
+  background-color: rgba(150,150,150,0.3);
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  height: 120%;
+  width: 100%;
+  animation-name: modalanimation;
+  animation-duration: 2s;
+  padding-top: 20%;
+}
+
+.addModal {
+  background-color: black;
+  color: white;
+  width: 100%;
+  border-radius: 5px;
+  height: 100%;
+}
+@keyframes modalanimation {
+  0% {
+    top: 800px;
+  }
+  100% {
+     top: 00px;
+  }
+}
+.modalCloseContainer {
+  text-align: right;
+  padding-right: 5%;
+  font-size: 2rem;
+}
+
+.quantityOfStocks{
+  width: 15%;
+}
+.addModalName{
+  font-size: 24px;
+  margin: 30px 0;
+  text-align: center;
+}
+.addModalPrice{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.addModalTotal{
+  text-align: center;
+  margin: 100px 0;
+  font-size: 32px;
+}
+.addModalButtonContainer{
+  text-align: center;
+  margin: 20px 0;
+}
+.addModalButton{
+  border: none;
+  cursor: pointer;
+  background-color: #ADD8E6;
+  text-align: center;
+  padding: 20px;
+}
+.addModalButton:hover{
+  background-color: rgb(129, 179, 197);
+}
+
+.removeModalContainer{
+  position: absolute;
+  background-color: rgba(150,150,150,0.3);
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}

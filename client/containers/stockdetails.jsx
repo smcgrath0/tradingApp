@@ -36,7 +36,7 @@ class StockDetails extends React.Component {
           <div className="addModalName">{this.props.stock[0].name}</div>
           <div className="addModalPrice">${this.props.stock[0].price} x <input id="quantityOfStocks" type="number" min="1" value={this.props.stockQuantity} onChange={this.handleChange}/></div>
           <div className="addModalTotal">
-            Total: {document.querySelector('#quantityOfStocks')
+            Total: ${document.querySelector('#quantityOfStocks')
               ? this.props.stock[0].price * document.querySelector('#quantityOfStocks').value
               : this.props.stock[0].price
             }
